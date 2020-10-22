@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+spring:
+  thymeleaf:
+    cache: false
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/blog?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 10341034ma
+
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+#  resources:
+#    add-mappings: true
+
+logging:
+  level:
+    root: info
+    com.simplem: debug
+  file:
+    name: log/blog.log
+
+mybatis:
+  type-aliases-package: com.simplem.personal_blog.model
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+comment:
+  avatar: /images/小黄人头像.jpg
