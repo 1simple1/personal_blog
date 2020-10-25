@@ -40,7 +40,7 @@ CodeMirror.defineMode("fortran", function() {
                   "print", "private", "program", "protected",
                   "public", "pure", "read", "recursive", "result",
                   "return", "rewind", "save", "select", "sequence",
-                  "stop", "subroutine", "target", "then", "to", "type",
+                  "stop", "subroutine", "target", "then", "to", "templates.type",
                   "use", "value", "volatile", "where", "while",
                   "write"]);
   var builtins = words(["abort", "abs", "access", "achar", "acos",
@@ -77,7 +77,7 @@ CodeMirror.defineMode("fortran", function() {
                           "iachar", "iand", "iargc", "ibclr", "ibits",
                           "ibset", "ichar", "idate", "idim", "idint",
                           "idnint", "ieor", "ierrno", "ifix", "imag",
-                          "imagpart", "index", "int", "ior", "irand",
+                          "imagpart", "templates.index", "int", "ior", "irand",
                           "isatty", "ishft", "ishftc", "isign",
                           "iso_c_binding", "is_iostat_end", "is_iostat_eor",
                           "itime", "kill", "kind", "lbound", "len", "len_trim",

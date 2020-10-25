@@ -110,7 +110,7 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
     {
       stream.eatWhile(/[\w_<>]/);
       word = stream.current();
-      return ret("type", "variable-3", word);
+      return ret("templates.type", "variable-3", word);
     }
     else
     {
@@ -325,7 +325,7 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
   function typedef (type, value)
   {
   if(type == "variable" && /[A-Z]/.test(value.charAt(0))) { registerimport(value); return cont(); }
-  else if (type == "type" && /[A-Z]/.test(value.charAt(0))) { return cont(); }
+  else if (type == "templates.type" && /[A-Z]/.test(value.charAt(0))) { return cont(); }
   }
 
   function maybelabel(type) {
@@ -380,7 +380,7 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
     if(type == ":") return cont(typestring);
   }
   function typestring(type) {
-    if(type == "type") return cont();
+    if(type == "templates.type") return cont();
     if(type == "variable") return cont();
     if(type == "{") return cont(pushlex("}"), commasep(typeprop, "}"), poplex);
   }

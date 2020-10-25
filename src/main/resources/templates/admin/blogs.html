@@ -20,78 +20,91 @@
 <!--中间内容-->
 <div id="waypoint" class="m-container-small m-padded-tb-large">
     <div class="ui container">
-        <div class="ui success message">
+<!--        <div class="ui success message">-->
+<!--            <i class="close icon"></i>-->
+<!--            <div class="header">提示：</div>-->
+<!--            <p>操作成功！</p>-->
+<!--        </div>-->
+
+        <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
             <i class="close icon"></i>
             <div class="header">提示：</div>
-            <p>操作成功！</p>
+            <p th:text="${message}">操作失败！</p>
         </div>
-
-        <form action="#" method="post" class="ui segment form">
-        <div class="inline fields">
-            <div class="field">
-                <input type="text" name="title" placeholder="标题">
-            </div>
-            <div class="field">
-                <div class="ui selection dropdown">
-                    <input type="hidden" name="type">
-                    <i class="dropdown icon"></i>
-                    <div class="default text">分类</div>
-                    <div class="menu">
-                        <div class="item" data-value="1">错误日志</div>
-                        <div class="item" data-value="2">技术入门</div>
+        <div class="ui secondary segment form">
+            <div class="inline fields">
+                <div class="field">
+                    <input type="text" name="title" placeholder="标题">
+                </div>
+                <div class="field">
+                    <div class="ui labeled action input">
+                        <div class="ui type selection dropdown">
+                            <input type="hidden" name="typeId">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">分类</div>
+                            <!--menu是菜单-->
+                            <div class="menu">
+                                <div th:each="type : ${types}" th:data-value="${type.id}" th:text="${type.name}" class="item" data-value="1">错误日志</div>
+                            </div>
+                        </div>
+                        <button id="clear-btn" class="ui blue button">清除</button>
                     </div>
                 </div>
-            </div>
-            <div class="field">
-                <div class="ui checkbox">
-                    <input type="checkbox" id="recommend" name="recommend">
-                    <label for="recommend">推荐</label>
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" id="recommend" name="recommend">
+                        <label for="recommend">推荐</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <button type="button" id="search-button" class="ui blue mini basic button">
+                        <i class="search icon"></i>搜索
+                    </button>
                 </div>
             </div>
-            <div class="field">
-                <button class="ui blue mini basic button">
-                    <i class="search icon"></i>搜索
-                </button>
-            </div>
         </div>
-    </form>
-
-        <table class="ui celled table">
-            <thead>
-            <tr>
-                <th></th>
-                <th>标题</th>
-                <th>类型</th>
-                <th>推荐</th>
-                <th>更新时间</th>
-                <th>操作</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>1</td>
-                <td>练习</td>
-                <td>学习</td>
-                <td>是</td>
-                <td>2020-10-01 09:16</td>
-                <td>
-                    <a href="#" class="ui mini basic blue button">编辑</a>
-                    <a href="#" class="ui mini basic red button" onclick="return confirm('确定要删除该分类吗？三思啊! 删了可就没了！')">删除</a>
-                </td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr>
-                <th colspan="6">
-                    <div class="ui  floated pagination menu">
-                        <a class="mini icon item">上一页</a>
-                        <a class="mini icon item">下一页</a>
-                    </div>
-                    <a href="#" class="ui right floated teal basic button">新增</a>
-                </th>
-            </tr>
-            </tfoot>
-        </table>
+        <div>
+            <table th:fragment="blogList" class="ui celled table">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>标题</th>
+                    <th>类型</th>
+                    <th>推荐</th>
+                    <th>状态</th>
+                    <th>更新时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="blog, iterStat : ${pageInfo.list}">
+                    <td th:text="${iterStat.count}">1</td>
+                    <td th:text="${blog.title}">练习</td>
+                    <td th:text="${blog.type.name}">学习</td>
+                    <td th:text="${blog.title} ? '是' : '否'">是</td>
+                    <td th:text="${blog.published} ? '发布' : '草稿'">发布</td>
+                    <td th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd HH:mm:ss')}">2020-10-01 09:16</td>
+                    <td>
+                        <a href="#" class="ui mini basic blue button">编辑</a>
+                        <a href="#" class="ui mini basic red button" onclick="return confirm('确定要删除该分类吗？三思啊! 删了可就没了！')">删除</a>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="7">
+                        <div class="ui mini pagination menu"  >
+                            <div class="item"><a th:href="@{/admin/blogs}">首页</a></div>
+                            <div class="item"><a th:href="@{/admin/blogs(pageNum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}">上一页</a></div>
+                            <div class="item"><a th:href="@{/admin/blogs(pageNum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">下一页</a></div>
+                            <div class="item"><a th:href="@{/admin/blogs(pageNum=${pageInfo.pages})}">尾页</a></div>
+                        </div>
+                        <a href="#" th:href="@{/admin/blogs/input}" class="ui mini right floated teal basic button">新增</a>
+                    </th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -101,55 +114,11 @@
     </div>
 </div>
 
-<!--底部footer-->
-<footer class="ui inverted vertical segment m-padded-tb-large">
-    <div class="ui center aligned container">
-        <div class="ui inverted divided stackable grid">
-            <div class="three wide column">
-                <img src="../../static/images/1005-800x450.jpg" class="ui round image">
-            </div>
-            <div class="three wide column">
-                <h4 class="ui inverted header">最新博客</h4>
-                <div class="ui inverted list"></div>
-                <a href="#" class="item m-opacity-tiny m-white">用户故事{User Story}</a><br/>
-                <a href="#" class="item m-opacity-tiny m-white">用户故事{User Story}</a><br/>
-                <a href="#" class="item m-opacity-tiny m-white">用户故事{User Story}</a><br/>
-            </div>
-            <div class="three wide column">
-                <h4 class="ui inverted header">联系我</h4>
-                <div class="ui inverted link list"></div>
-                <a href="#" class="item m-opacity-tiny m-white">邮箱：123456789@qq.com</a><br/>
-                <a href="#" class="item m-opacity-tiny m-white">QQ：123456798</a><br/>
-                <a href="#" class="item m-opacity-tiny m-white">电话：123456789100</a><br/>
-            </div>
-            <div class="seven wide column">
-                <h4 class="ui inverted header">about</h4>
-                <div class="ui inverted link list"></div>
-                <a href="#" class="item m-opacity-tiny m-white">用户故事{User Story}</a><br/>
-                <a href="#" class="item m-opacity-tiny m-white">用户故事{User Story}</a><br/>
-                <a href="#" class="item m-opacity-tiny m-white">备案号 xxxxxxxxxxxxxx</a><br/>
-            </div>
-        </div>
-        <div class="ui inverted section divider"></div>
-        <p class="m-text-thin m-text-spaced m-opacity-mini">Copyright @2020-2020 SimpleM Designed by SimpleM</p>
-    </div>
-</footer>
+<th:block th:replace="admin/fragments :: script">
 
-<script src="../../static/lib/tocbot/tocbot.js"></script>
-<script src="../../static/jquery-3.5.1/jquery-3.5.1.min.js"></script>
-<script src="../../static/lib/prismJS/prism.js"></script>
-<script src="../../static/Semantic-UI-CSS-master/semantic.min.js"></script>
-<script src="../../static/lib/flesler/jquery.scrollTo.js"></script>
-<script src="../../static/lib/waypoints/jquery.waypoints.js"></script>
+</th:block>
 
 <script>
-    // $('#payButton').popup({
-    //     popup : $('.payQR.popup'),
-    //     on : 'click',
-    //     position: 'bottom center'
-    // });
-
-
     $('.ui.dropdown').dropdown({
         on: 'click'
     });
@@ -177,6 +146,26 @@
                 .closest('.message')
                 .transition('fade');
         });
+
+    //清除分类查询
+    $('#clear-btn')
+        .on('click', function() {
+            $('.ui.type.dropdown')
+                .dropdown('clear')
+            ;
+        });
+
+    $("#search-btn").click(function () {
+        $("[name='page']").val(0);
+        loaddata();
+    });
+    function loaddata() {
+        $("#table-container").load(/*[[@{/admin/blogs/search}]]*/"/admin/blogs/search",{
+            title : $("[name='title']").val(),
+            typeId : $("[name='typeId']").val(),
+            page : $("[name='page']").val()
+        });
+    }
 </script>
 </body>
 </html>

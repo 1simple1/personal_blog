@@ -122,7 +122,7 @@ CodeMirror.defineMode("erlang", function(cmCfg) {
     if (!peekToken(state) &&
         stream.match(/-\s*[a-zß-öø-ÿ][\wØ-ÞÀ-Öß-öø-ÿ]*/)) {
       if (is_member(stream.current(),typeWords)) {
-        return rval(state,stream,"type");
+        return rval(state,stream,"templates.type");
       }else{
         return rval(state,stream,"attribute");
       }
@@ -379,7 +379,7 @@ CodeMirror.defineMode("erlang", function(cmCfg) {
       case "record":      return "bracket";
       case "separator":   return null;
       case "string":      return "string";
-      case "type":        return "def";
+      case "templates.type":        return "def";
       case "variable":    return "variable";
       default:            return null;
     }
@@ -554,15 +554,15 @@ CodeMirror.defineMode("erlang", function(cmCfg) {
 
   function postcommaToken(state) {
     var objs = state.tokenStack.slice(0,-1);
-    var i = getTokenIndex(objs,"type",["open_paren"]);
+    var i = getTokenIndex(objs,"templates.type",["open_paren"]);
 
     return truthy(objs[i]) ? objs[i] : false;
   }
 
   function defaultToken(state) {
     var objs = state.tokenStack;
-    var stop = getTokenIndex(objs,"type",["open_paren","separator","keyword"]);
-    var oper = getTokenIndex(objs,"type",["operator"]);
+    var stop = getTokenIndex(objs,"templates.type",["open_paren","separator","keyword"]);
+    var oper = getTokenIndex(objs,"templates.type",["operator"]);
 
     if (truthy(stop) && truthy(oper) && stop < oper) {
       return objs[stop+1];

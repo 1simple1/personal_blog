@@ -25,4 +25,29 @@
     <delete id="deleteTypeById">
         delete from blog.t_type where id = #{id};
     </delete>
+    
+    <resultMap id="indexType" type="Type">
+        <id property="id" column="tid"/>
+        <result property="name" column="name"/>
+        <collection property="blogs" ofType="com.simplem.personal_blog.vo.FirstPageBlog">
+            <id property="id" column="id"/>
+            <result property="title" column="title"/>
+            <result property="firstPicture" column="first_picture"/>
+            <result property="views" column="views"/>
+            <result property="updateTime" column="update_time"/>
+            <result property="description" column="description"/>
+            <result property="typeName" column="name"/>
+            <result property="nickname" column="nickname"/>
+            <result property="avatar" column="avatar"/>
+        </collection>
+    </resultMap>
+
+    <!--首页右侧分类展示列表-->
+    <select id="getIndexType" resultMap="indexType">
+        select  b.id bid, b.title, b.type_id, t.id tid, t.name
+        from t_type t
+        inner join t_blog b
+        on t.id = b.type_id
+    </select>
+
 </mapper>

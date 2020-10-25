@@ -387,7 +387,7 @@ CodeMirror.defineMode('jade', function (config) {
         if (stream.peek() === '=' || stream.peek() === '!') {
           state.inAttributeName = false;
           state.jsState = jsMode.startState();
-          if (state.lastTag === 'script' && stream.current().trim().toLowerCase() === 'type') {
+          if (state.lastTag === 'script' && stream.current().trim().toLowerCase() === 'templates.type') {
             state.attributeIsType = true;
           } else {
             state.attributeIsType = false;

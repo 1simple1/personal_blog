@@ -106,7 +106,7 @@
       cm.showHint({hint: this.getHint});
     },
 
-    showType: function(cm, pos, c) { showContextInfo(this, cm, pos, "type", c); },
+    showType: function(cm, pos, c) { showContextInfo(this, cm, pos, "templates.type", c); },
 
     showDocs: function(cm, pos, c) { showContextInfo(this, cm, pos, "documentation", c); },
 
@@ -300,7 +300,7 @@
     if (cache && cache.doc == cm.getDoc() && cmpPos(start, cache.start) == 0)
       return showArgHints(ts, cm, argPos);
 
-    ts.request(cm, {type: "type", preferFunction: true, end: start}, function(error, data) {
+    ts.request(cm, {type: "templates.type", preferFunction: true, end: start}, function(error, data) {
       if (error || !data.type || !(/^fn\(/).test(data.type)) return;
       ts.cachedArgHints = {
         start: pos,
@@ -325,11 +325,11 @@
       tip.appendChild(elt("span", cls + "farg" + (i == pos ? " " + cls + "farg-current" : ""), arg.name || "?"));
       if (arg.type != "?") {
         tip.appendChild(document.createTextNode(":\u00a0"));
-        tip.appendChild(elt("span", cls + "type", arg.type));
+        tip.appendChild(elt("span", cls + "templates.type", arg.type));
       }
     }
     tip.appendChild(document.createTextNode(tp.rettype ? ") ->\u00a0" : ")"));
-    if (tp.rettype) tip.appendChild(elt("span", cls + "type", tp.rettype));
+    if (tp.rettype) tip.appendChild(elt("span", cls + "templates.type", tp.rettype));
     var place = cm.cursorCoords(null, "page");
     ts.activeArgHints = makeTooltip(place.right + 1, place.bottom, tip);
   }

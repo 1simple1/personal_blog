@@ -47,11 +47,23 @@
             <tfoot>
             <tr>
                 <th colspan="6">
-                    <div class="ui floated pagination menu">
-                        <div class="item"><a th:href="@{/admin/types}">首页</a></div>
-                        <div class="item"><a th:href="@{/admin/types(pageNum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}">上一页</a></div>
-                        <div class="item"><a th:href="@{/admin/types(pageNum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">下一页</a></div>
-                        <div class="item"><a th:href="@{/admin/types(pageNum=${pageInfo.pages})}">尾页</a></div>
+<!--                    <div class="ui floated pagination menu">-->
+<!--                        <div class="item"><a th:href="@{/admin/types}">首页</a></div>-->
+<!--                        <div class="item"><a th:href="@{/admin/types(pageNum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}">上一页</a></div>-->
+<!--                        <div class="item"><a th:href="@{/admin/types(pageNum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">下一页</a></div>-->
+<!--                        <div class="item"><a th:href="@{/admin/types(pageNum=${pageInfo.pages})}">尾页</a></div>-->
+<!--                    </div>-->
+
+                    <div class="ui floated pagination menu" th:unless="${pageInfo.pages}==1">
+                        <a th:href="@{/admin/types(pageNum=${pageInfo.pageNum}-1)}" th:unless="${pageInfo.isFirstPage}" class="icon item">
+                            <i class="left chevron icon"></i>
+                        </a>
+                        <a th:each="p : ${pageInfo.navigatepageNums}" th:text="${p}" th:href="@{/admin/types(pageNum=${p})}"
+                           class="item" th:classappend="${pageInfo.pageNum}==${p}? 'active'">1</a>
+
+                        <a th:href="@{/admin/types(pageNum=${pageInfo.pageNum}+1)}" th:unless="${pageInfo.isLastPage}" class="icon item">
+                            <i class="right chevron icon"></i>
+                        </a>
                     </div>
                     <a href="#" class="ui right floated teal basic button" th:href="@{/admin/types/input}">新增</a>
                 </th>

@@ -22,6 +22,11 @@ public class TypeServiceImpl implements TypeService {
     private TypeMapper typeMapper;
 
     @Override
+    public List<Type> getIndexType() {
+        return typeMapper.getIndexType();
+    }
+
+    @Override
     public Type selectByid(Long id) {
         return typeMapper.selectById(id);
     }

@@ -49,4 +49,9 @@ public class TagServiceImpl implements TagService {
     public void deleteType(Long id) {
         tagMapper.deleteTypeById(id);
     }
+
+    @Override
+    public List<Tag> getIndexTag() {
+        return tagMapper.getIndexTag();
+    }
 }

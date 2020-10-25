@@ -242,7 +242,7 @@
       case "tableCellAttributes":
         return REs.makeRe("^", REs.choiceRe(REs.single.tableCellAttributes,
                                             RE("allAttributes")), "+\\.");
-      case "type":
+      case "templates.type":
         return REs.makeRe("^", RE("allTypes"));
       case "typeLayout":
         return REs.makeRe("^", RE("allTypes"), RE("allAttributes"),
@@ -315,7 +315,7 @@
       var match, type;
       state.layoutType = null;
 
-      if (match = stream.match(RE("type")))
+      if (match = stream.match(RE("templates.type")))
         type = match[0];
       else
         return (state.mode = Modes.text)(stream, state);

@@ -22,4 +22,7 @@ public interface TypeMapper {
     int updateTypeById(Type type);
 
     void deleteTypeById(Long id);
+
+    List<Type> getIndexType();
+
 }

@@ -20,4 +20,6 @@ public interface TagMapper {
     int updateTag(Tag tag);
 
     void deleteTypeById(Long id);
+
+    List<Tag> getIndexTag();
 }

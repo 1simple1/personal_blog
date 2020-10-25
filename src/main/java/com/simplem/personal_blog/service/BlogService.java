@@ -1,5 +1,9 @@
 package com.simplem.personal_blog.service;
 
+import com.simplem.personal_blog.model.Blog;
+import com.simplem.personal_blog.vo.FirstPageBlog;
+import com.simplem.personal_blog.vo.indexBlog;
+
 import java.util.List;
 
 /**
@@ -11,7 +15,16 @@ import java.util.List;
  */
 public interface BlogService {
 
-//    List<Blog> getIndexBlog();  //主页博客展示
+    List<FirstPageBlog> getIndexBlog();  //主页博客展示
 
+    List<Blog> getAllBlog();
+
+    List<Blog> searchAllBlog(Blog blog);
+
+    List<indexBlog> getNewBlogs();
+
+    List<indexBlog> findRecommendBlogs();
+
+    List<FirstPageBlog> findAllByTypeId(Long typeId);//分类页面展示的博客
 
 }

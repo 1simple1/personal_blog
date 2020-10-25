@@ -2,5 +2,97 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.simplem.personal_blog.dao.BlogMapper">
 
+    <resultMap id="blog" type="Blog">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="flag" column="flag"/>
+        <result property="views" column="views"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="typeId" column="type_id"/>
+        <result property="firstPicture" column="first_picture"/>
+        <result property="shareStatement" column="share_statement"/>
+        <result property="published" column="published"/>
+        <result property="appreciation" column="appreciation"/>
+        <result property="commentabled" column="commentabled"/>
+        <result property="description" column="description"/>
+        <result property="recommend" column="recommend"/>
+        <result property="createTime" column="create_time"/>
+        <result property="typeId" column="type_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="tagIds" column="tag_ids"/>
+        <association property="type" javaType="Type">
+            <id property="id" column="typeid"/>
+            <result property="name" column="typename"/>
+        </association>
+    </resultMap>
+    
+    <!--博客后台展示-->
+    <select id="getAllBlog" resultMap="blog">
+        select b.id, b.title, b.update_time, b.recommend, b.type_id, b.published,
+               t.id typeid, t.name typename
+        from t_blog b
+        INNER JOIN t_type t
+        ON b.type_id = t.id
+    </select>
+
+    <resultMap id="firstPageBlog" type="com.simplem.personal_blog.vo.FirstPageBlog">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="firstPicture" column="first_picture"/>
+        <result property="views" column="views"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="description" column="description"/>
+        <result property="typeName" column="name"/>
+        <result property="nickname" column="nickname"/>
+        <result property="avatar" column="avatar"/>
+    </resultMap>
+
+    <!--博客前台展示(表连接的条件不清晰)-->
+<!--    <select id="findAll" resultMap="firstPageBlog">-->
+<!--        select b.id, b.title, b.first_picture, b.views, b.update_time, b.description,-->
+<!--               t.name,-->
+<!--               u.nickname, u.avatar-->
+<!--        from blog.t_blog b , blog.t_type t, blog.t_user u-->
+<!--        where b.type_id = t.id and b.user_id = u.id and b.published order by b.update_time desc-->
+<!--    </select>-->
+    <!--博客前台展示(结构清晰，表连接的条件和where条件分离了)-->
+    <select id="findAll" resultMap="firstPageBlog">
+        select b.id, b.title, b.first_picture, b.views, b.update_time, b.description,
+				t.name,
+				u.nickname, u.avatar
+        from (t_blog b INNER JOIN t_type t ON b.type_id = t.id)
+        INNER JOIN t_user u
+        ON b.user_id = u.id
+        WHERE b.published order by b.update_time desc
+    </select>
+
+    <select id="findAllByTypeId" resultMap="firstPageBlog">
+        select b.id, b.title, b.first_picture, b.views, b.update_time, b.description,
+				t.name,
+				u.nickname, u.avatar
+        from (t_blog b INNER JOIN t_type t ON b.type_id = t.id)
+        INNER JOIN t_user u
+        ON b.user_id = u.id
+        WHERE b.published and b.type_id = #{typeId} order by b.update_time desc
+    </select>
+
+    <resultMap id="indexBlog" type="com.simplem.personal_blog.vo.indexBlog">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+    </resultMap>
+
+    <select id="getNewBlogs" resultMap="indexBlog">
+        select b.id, b.title, b.update_time
+        from blog.t_blog b
+        WHERE b.published order by update_time desc limit 3
+    </select>
+    
+    <select id="findRecommendBlogs" resultMap="indexBlog">
+        select b.id, b.title, b.update_time
+        from t_blog b
+        where b.published and b.commentabled order by update_time desc limit 5
+    </select>
+
 
 </mapper>
