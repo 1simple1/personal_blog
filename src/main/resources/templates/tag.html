@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments :: head(~{::title})">
-    <title>文章分类</title>
+    <title>文章标签</title>
 </head>
 <body>
 <!--导航-->
-<nav th:replace="fragments :: menu(2)">
+<nav th:replace="fragments :: menu(3)">
 </nav>
 
 <!--中间内容-->
@@ -15,18 +15,18 @@
         <div class="ui top attached segment">
             <div class="ui middle aligned two column grid">
                 <div class="column">
-                    <i class="idea teal icon"></i><span class="ui teal header">分类</span>
+                    <i class="tags teal icon"></i><span class="ui teal header">标签</span>
                 </div>
                 <div class="right aligned column">
-                    共<h2 class="ui orange header m-inline-block m-text-thin" th:text="${#arrays.length(types)}">14</h2>类
+                    共<h2 class="ui orange header m-inline-block m-text-thin" th:text="${#arrays.length(tags)}">14</h2>个
                 </div>
             </div>
         </div>
         <!--分类-->
         <div class="ui attached segment m-padded-text">
-            <div class="ui labeled button m-margin-tb-tiny" th:each="type : ${types}">
-                <a href="#" th:href="@{/types/{typeId}(typeId=${type.id})}" class="ui basic teal button" th:text="${type.name}">思考与感悟</a>
-                <div class="ui basic teal left pointing label" th:text="${#arrays.length(type.blogs)}">24</div>
+            <div class="ui labeled button m-margin-tb-tiny" th:each="tag : ${tags}">
+                <a href="#" th:href="@{/tags/{tagId}(tagId=${tag.id})}" class="ui basic teal button" th:text="${tag.name}">思考与感悟</a>
+                <div class="ui basic teal left pointing label" th:text="${#arrays.length(tag.blogs)}">24</div>
             </div>
         </div>
         <!--文章-->
@@ -41,7 +41,7 @@
                                 <div class="ui mini horizontal link list">
                                     <div class="item">
                                         <img src="../../static/images/github-icon.png" alt=""
-                                            th:src="${blog.avatar}"  class="ui avatar image">
+                                             th:src="${blog.avatar}"  class="ui avatar image">
                                         <div class="content">
                                             <div class="header" th:text="${blog.nickname}">SimpleM</div>
                                         </div>
@@ -79,7 +79,6 @@
                 <a th:href="@{/(pageNum=${blogPageInfo.pageNum}+1)}" th:unless="${blogPageInfo.isLastPage}" class="icon item"><i class="right chevron icon"></i></a>
             </span>
         </div>
-
     </div>
 </div>
 

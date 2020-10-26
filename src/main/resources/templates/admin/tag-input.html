@@ -28,6 +28,11 @@
 <div id="waypoint" class="m-container m-padded-tb-large">
     <div class="ui container">
         <!--后端校验提示信息-->
+        <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+            <i class="close icon"></i>
+            <div class="header">提示：</div>
+            <p th:text="${message}">操作失败！</p>
+        </div>
         <div class="ui error message" th:unless="${#strings.isEmpty(message)}">
             <i class="close icon"></i>
             <div class="header">提示：</div>

@@ -40,4 +40,14 @@
         INNER JOIN t_tag t
         ON bt.tags_id = t.id
     </select>
+
+    <select id="findAllByIds" parameterType="List" resultType="Tag">
+        select id,name from t_tag
+        <where> id in
+            <foreach collection="list" index="index" item="ids" separator="," open="(" close=")">
+                #{ids}
+            </foreach>
+        </where>
+    </select>
+
 </mapper>

@@ -46,7 +46,7 @@ public class TypeController {
     //编辑标签
     @GetMapping("/types/{id}/input")
     public String editorType(@PathVariable Long id,Model model){
-        model.addAttribute("type",typeService.selectByid(id));
+        model.addAttribute("type",typeService.selectById(id));
         return "admin/type-input";
     }
 

@@ -27,7 +27,7 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
-    public Type selectByid(Long id) {
+    public Type selectById(Long id) {
         return typeMapper.selectById(id);
     }
 

@@ -5,7 +5,9 @@ import com.simplem.personal_blog.model.Tag;
 import com.simplem.personal_blog.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,5 +55,29 @@ public class TagServiceImpl implements TagService {
     @Override
     public List<Tag> getIndexTag() {
         return tagMapper.getIndexTag();
+    }
+
+    @Transactional //声明式事务管理
+    @Override
+    public List<Tag> listTag(String ids) {
+        return tagMapper.findAllByIds(convertToLong(ids));
+    }
+
+    @Override
+    public List<Tag> findTagByBlogId(Long blogId) {
+        return tagMapper.findTagByBlogId(blogId);
+    }
+
+    //ids: 1,2,3
+    //把前端的tagIds字符串转换为list集合
+    private List<Long> convertToLong(String ids) {
+        List<Long> list = new ArrayList<>();
+        if (!"".equals(ids) && ids != null) {
+            String[] split = ids.split(",");
+            for (int i = 0; i < split.length; i++) {
+                list.add(new Long(split[i]));
+            }
+        }
+        return list;
     }
 }

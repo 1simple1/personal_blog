@@ -22,4 +22,8 @@ public interface TagMapper {
     void deleteTypeById(Long id);
 
     List<Tag> getIndexTag();
+
+    List<Tag> findAllByIds(List<Long> ids);
+
+    List<Tag> findTagByBlogId(Long blogId);
 }

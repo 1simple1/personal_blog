@@ -27,4 +27,15 @@ public interface BlogService {
 
     List<FirstPageBlog> findAllByTypeId(Long typeId);//分类页面展示的博客
 
+    List<FirstPageBlog> findAllByTagId(Long tagId);//分类页面展示的博客
+
+    Blog selectBlogById(Long id);
+
+    Blog getBlogById(Long id);
+
+    int save(Blog blog);
+
+    int update(Blog blog);
+
+    int delete(Long id);
 }

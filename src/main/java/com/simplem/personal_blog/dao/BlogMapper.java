@@ -25,4 +25,20 @@ public interface BlogMapper {
     List<indexBlog> findRecommendBlogs();   //首页展示的博客
 
     List<FirstPageBlog> findAllByTypeId(Long typeId);//分类页面展示的博客
+
+    List<FirstPageBlog> findAllByTagId(Long tagId);//分类页面展示的博客
+
+    Blog selectBlogById(Long id);
+
+    void updateViews(Long id);
+
+    Blog getBlogById(Long id);
+
+    int save(Blog blog);
+
+    Blog getBlog(Long id);
+
+    int update(Blog blog);
+
+    int delete(Long id);
 }

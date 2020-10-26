@@ -12,4 +12,6 @@ import com.simplem.personal_blog.model.User;
 public interface UserService {
     //用户登录
     User login(String username,String password);
+
+    User selectUserById(Long userId);
 }

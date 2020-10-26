@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface UserMapper {
 
     User queryByUsernameAndPassword(String username,String password);
+
+    User selectUserById(Long userId);
 }

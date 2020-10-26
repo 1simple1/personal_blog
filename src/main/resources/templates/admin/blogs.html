@@ -26,10 +26,16 @@
 <!--            <p>操作成功！</p>-->
 <!--        </div>-->
 
-        <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+        <div class="ui success message" th:unless="${#strings.isEmpty(success)}">
             <i class="close icon"></i>
             <div class="header">提示：</div>
-            <p th:text="${message}">操作失败！</p>
+            <p th:text="${success}">操作失败！</p>
+        </div>
+
+        <div class="ui error message" th:unless="${#strings.isEmpty(error)}">
+            <i class="close icon"></i>
+            <div class="header">提示：</div>
+            <p th:text="${error}">操作失败！</p>
         </div>
         <div class="ui secondary segment form">
             <div class="inline fields">
@@ -66,7 +72,7 @@
         <div>
             <table th:fragment="blogList" class="ui celled table">
                 <thead>
-                <tr>
+                <tr align="center">
                     <th>序号</th>
                     <th>标题</th>
                     <th>类型</th>
@@ -77,7 +83,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="blog, iterStat : ${pageInfo.list}">
+                <tr align="center" th:each="blog, iterStat : ${pageInfo.list}">
                     <td th:text="${iterStat.count}">1</td>
                     <td th:text="${blog.title}">练习</td>
                     <td th:text="${blog.type.name}">学习</td>
@@ -85,8 +91,8 @@
                     <td th:text="${blog.published} ? '发布' : '草稿'">发布</td>
                     <td th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd HH:mm:ss')}">2020-10-01 09:16</td>
                     <td>
-                        <a href="#" class="ui mini basic blue button">编辑</a>
-                        <a href="#" class="ui mini basic red button" onclick="return confirm('确定要删除该分类吗？三思啊! 删了可就没了！')">删除</a>
+                        <a href="#" th:href="@{/admin/blogs/{id}/input(id=${blog.id})}" class="ui mini basic blue button">编辑</a>
+                        <a href="#" class="ui mini basic red button" th:action="@{/admin/blogs/{id}/delete(id=${blog.id})}" onclick="return confirm('确定要删除该分类吗？三思啊! 删了可就没了！')">删除</a>
                     </td>
                 </tr>
                 </tbody>

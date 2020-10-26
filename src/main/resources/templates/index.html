@@ -31,7 +31,7 @@
                     <div class="ui padded vertical segment m-padded-text" th:each="blog : ${blogPageInfo.list}">
                         <div class="ui middle aligned stackable grid">
                             <div class="eleven wide column">
-                                <h3 class="ui header" th:text="${blog.title}"><a href="#" class="black">标题一</a></h3>
+                                <h3 class="ui header"><a href="#" th:href="@{/blog/{id}(id=${blog.id})}" th:text="${blog.title}" target="_blank" class="m-black">标题一</a></h3>
                                 <p class="m-text" th:text="|${blog.description}......|">文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容</p>
                                 <div class="ui stackable grid">
                                     <div class="eleven wide column">
@@ -95,7 +95,7 @@
                                 <i class="idea icon"></i>分类
                             </div>
                             <div class="right aligned column">
-                                <a href="#" target="_blank">more >></a>
+                                <a href="#" th:href="@{/types/-1}" target="_blank">more >></a>
                             </div>
                         </div>
                     </div>
@@ -116,7 +116,7 @@
                                 <i class="tag icon"></i>标签
                             </div>
                             <div class="right aligned column">
-                                <a href="#" target="_blank">more >></a>
+                                <a href="#" th:href="@{/tags/-1}" target="_blank">more >></a>
                             </div>
                         </div>
                         <div class="ui teal segment">

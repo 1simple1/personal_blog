@@ -15,7 +15,7 @@ public interface TypeService {
 
     List<Type> getAllType();
 
-    Type selectByid(Long id);
+    Type selectById(Long id);
 
     int insertType(Type type);
 
@@ -26,4 +26,5 @@ public interface TypeService {
     void deleteType(Long id);
 
     List<Type> getIndexType();
+
 }

@@ -3,9 +3,12 @@
 <mapper namespace="com.simplem.personal_blog.dao.UserMapper">
 
     <select id="queryByUsernameAndPassword" resultType="User">
-        select * from blog.t_user
+        select id from blog.t_user
         where username = #{username} and password = #{password};
     </select>
 
-
+    <select id="selectUserById" resultType="User">
+        select id,nickname,avatar,email from t_user
+        where id = #{userId}
+    </select>
 </mapper>
