@@ -35,6 +35,7 @@ public class LoginController {
         }else {
             user.setPassword(null);
             session.setAttribute("user",user);
+            System.out.println(user);
             return "admin/index";//进入后台
         }
     }

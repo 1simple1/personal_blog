@@ -3,6 +3,7 @@ package com.simplem.personal_blog.controller.admin;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simplem.personal_blog.model.Type;
+import com.simplem.personal_blog.service.BlogService;
 import com.simplem.personal_blog.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +26,9 @@ public class TypeController {
 
     @Autowired
     private TypeService typeService;
+
+    @Autowired
+    private BlogService blogService;
     //进入标签页
     @GetMapping("/types")
     public String getTypes(Model model,@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
@@ -61,9 +65,9 @@ public class TypeController {
         }
 
         if(1 == typeService.insertType(type)){
-            attributes.addFlashAttribute("message","新增成功！");
+            attributes.addFlashAttribute("success","新增成功！");
         }else {
-            attributes.addFlashAttribute("message","新增失败");
+            attributes.addFlashAttribute("error","新增失败");
         }
         return "redirect:/admin/types";
     }
@@ -73,13 +77,13 @@ public class TypeController {
         //先判断修改的分类有没有重名
         Type t = typeService.selectByName(type.getName());//通过分类查询分类
         if (null != t){//如果存在，修改失败
-            attributes.addFlashAttribute("message","修改失败，该分类已存在！");
+            attributes.addFlashAttribute("error","修改失败，该分类已存在！");
             return "redirect:/admin/types/"+id+"/input"; //返回编辑页面，重新编辑
         }
         if(1 == typeService.updateType(type)){
-            attributes.addFlashAttribute("message","修改成功");
+            attributes.addFlashAttribute("success","修改成功");
         }else {
-            attributes.addFlashAttribute("message","修改失败");
+            attributes.addFlashAttribute("error","修改失败");
         }
         return "redirect:/admin/types";//必须要重定向到分类页面，没有pageInfo的数据，页面渲染报错
     }
@@ -87,7 +91,18 @@ public class TypeController {
     @GetMapping("/types/{id}/delete")
     public String deleteType(@PathVariable Long id,RedirectAttributes attributes){
         typeService.deleteType(id);
-        attributes.addFlashAttribute("message","删除成功");
+        attributes.addFlashAttribute("success","删除成功");
         return "redirect:/admin/types";
+
+        /*Blog blog = blogService.selectBlogById(id);
+        if(blog == null){
+            typeService.deleteType(id);
+            attributes.addFlashAttribute("success","删除成功");
+            return "redirect:/admin/types";
+        }else {
+            attributes.addFlashAttribute("error","该博客下存在分类，不能删除！");
+            return "redirect:/admin/types";
+        }*/
     }
+
 }

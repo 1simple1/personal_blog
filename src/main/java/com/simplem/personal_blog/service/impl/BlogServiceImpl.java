@@ -3,14 +3,15 @@ package com.simplem.personal_blog.service.impl;
 import com.simplem.personal_blog.dao.BlogMapper;
 import com.simplem.personal_blog.dao.BlogTagsMapper;
 import com.simplem.personal_blog.dao.TagMapper;
-import com.simplem.personal_blog.exception.NotFoundException;
+
 import com.simplem.personal_blog.model.Blog;
 import com.simplem.personal_blog.model.Tag;
 import com.simplem.personal_blog.service.BlogService;
 import com.simplem.personal_blog.util.MarkdownUtils;
 import com.simplem.personal_blog.util.MyBeanUtils;
+import com.simplem.personal_blog.vo.BlogQuery;
 import com.simplem.personal_blog.vo.FirstPageBlog;
-import com.simplem.personal_blog.vo.indexBlog;
+import com.simplem.personal_blog.vo.IndexBlog;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,12 +58,12 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<indexBlog> findRecommendBlogs() {
+    public List<IndexBlog> findRecommendBlogs() {
         return blogMapper.findRecommendBlogs();
     }
 
     @Override
-    public List<indexBlog> getNewBlogs() {
+    public List<IndexBlog> getNewBlogs() {
         return blogMapper.getNewBlogs();
     }
 
@@ -75,9 +76,6 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Blog selectBlogById(Long id) {
         Blog blog = blogMapper.selectBlogById(id);
-        if(blog == null){
-            throw new NotFoundException("博客不存在");
-        }
         //将博客的内容转换成HTML格式再返回
         Blog b = new Blog(); //创建一个新的blog对象，防止直接将content转换成HTML格式
         BeanUtils.copyProperties(blog,b);
@@ -153,5 +151,10 @@ public class BlogServiceImpl implements BlogService {
     public int delete(Long id) {
         blogTagMapper.delete(id);
         return blogMapper.delete(id);
+    }
+
+    @Override
+    public List<Blog> getAllBlogBySearch(BlogQuery blogQuery) {
+        return blogMapper.getAllBlogBySearch(blogQuery);
     }
 }

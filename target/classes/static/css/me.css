@@ -1,0 +1,195 @@
+body{
+    background: url(../images/email-pattern.png);
+}
+
+.m-padding-mini{
+    padding: 0.2em;
+}
+
+.m-padding-big{
+    padding: 1em;
+}
+
+.m-padded-tb-mini {
+    padding-top: 0.1em !important;
+    padding-bottom: 0.1em !important;
+}
+
+.m-padded-tb{
+    padding-top: 1em !important;
+    padding-bottom: 1em !important;
+}
+
+.m-padded-tb-large{
+    padding-top: 2em !important;
+    padding-bottom: 2em !important;
+}
+
+.m-padded-tb-big{
+    padding-top: 3em !important;
+    padding-bottom: 3em !important;
+}
+
+.m-padded-tb-massive{
+    padding-top: 5em !important;
+    padding-bottom: 5em !important;
+}
+
+.m-padded-text{
+    padding-left: 3em !important;
+    padding-right: 3em !important;
+    padding-bottom: 3em !important;
+}
+
+.m-padded-left{
+    padding-left: 3em !important;
+}
+
+.m-text-thin{
+    font-weight: 300 !important;
+}
+
+.m-text-spaced{
+    letter-spacing: 1px;
+}
+
+.m-text{
+    font-weight: 300 !important;
+    letter-spacing: 1px !important;
+}
+
+
+.m-text-lined{
+    line-height: 1.8;
+}
+
+.m-opacity-mini{
+    opacity: 0.8 !important;
+}
+
+.m-opacity-tiny{
+    opacity: 0.7 !important;
+}
+
+.m-inline-block{
+    display: inline-block !important;
+}
+
+/*container*/
+.m-container{
+    max-width: 72em !important;
+    margin: auto !important;
+}
+
+.m-container-small{
+    max-width: 60em !important;
+    margin: auto !important;
+}
+
+/*position*/
+.m-fixed{
+    position: fixed !important;
+    z-index: 1 !important;
+}
+
+.m-right-bottom{
+    bottom: 0 !important;
+    right: 0 !important;
+}
+
+/*margin*/
+.m-margin-tb-tiny{
+    margin-top: 0.3em !important;
+    margin-bottom: 0.3em !important;
+}
+
+/*color*/
+.m-black{
+    color: #333333 !important;
+}
+
+.m-white{
+    color: white !important;
+}
+
+/*shadow*/
+.m-shadow-small{
+    -webkit-box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+}
+
+@media screen and (max-width: 768px){
+    .m-mobile-hide{
+        display: none !important;
+    }
+    .m-mobile-show{
+        display: block !important;
+    }
+    .m-padded-text-responsive{
+        padding-left: 0em;
+        padding-right: 0em;
+    }
+
+    .m-padded-text-clear{
+        padding-left: 0em;
+        padding-right: 0em;
+    }
+
+    .m-mobile-wide{
+        width: 100%;
+    }
+}
+
+/*导航栏样式*/
+.gird-header {
+    width: 100%;
+    min-height: 60px;
+    opacity: 0.5;
+    position: fixed;
+    background-color: rgba(0,0,0,1);
+    z-index: 11002;
+    top: 0;
+    left: 0;
+    /*border-bottom: 1px solid #e8e9e7;*/
+    font-size: 15px;
+}
+
+.m-bg-class_outer {
+    display: block;
+    /*width: 550px;*/
+    /*height: 276px;*/
+    /*margin: 10px auto 0 0;*/
+    position: relative;
+    overflow: hidden;
+}
+
+.m-bg-type_outer {
+    display: block;
+    /*margin: 10px auto 0 0;*/
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+}
+
+.m-bg-class_cover {
+    width: 100%;
+    height: 750px;
+    line-height: 50px;
+    padding-left: 6px;
+    background-color: rgba(0, 0, 0, .60);
+    /*color: #FFFFFF;*/
+    /*font-size: 26px;*/
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+}
+
+.m-picture-text{
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: white;
+    font-size:large;
+    font-weight: bold;
+    /*font-family: '_GB2312 FangSong_GB2312';*/
+}

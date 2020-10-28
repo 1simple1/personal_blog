@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head(~{::title})">
+    <title>文章标签</title>
+</head>
+<body>
+<!--导航-->
+<nav th:replace="fragments :: menu(3)">
+</nav>
+
+<!--中间内容-->
+<div class="m-container-small m-padded-tb-large">
+    <div class="ui container">
+        <!--头-->
+        <div class="ui top attached segment">
+            <div class="ui middle aligned two column grid">
+                <div class="column">
+                    <i class="tags teal icon"></i><span class="ui teal header">标签</span>
+                </div>
+                <div class="right aligned column">
+                    共<h2 class="ui orange header m-inline-block m-text-thin" th:text="${#arrays.length(tags)}">14</h2>个
+                </div>
+            </div>
+        </div>
+        <!--分类-->
+        <div class="ui attached segment m-padded-text">
+            <div class="ui labeled button m-margin-tb-tiny" th:each="tag : ${tags}">
+                <a href="#" th:href="@{/tags/{tagId}(tagId=${tag.id})}" class="ui basic teal button" th:text="${tag.name}">思考与感悟</a>
+                <div class="ui basic teal left pointing label" th:text="${#arrays.length(tag.blogs)}">24</div>
+            </div>
+        </div>
+        <!--文章-->
+        <div class="ui top attached teal segment">
+            <div class="ui padded vertical segment m-padded-text" th:each="blog : ${blogPageInfo.list}">
+                <div class="ui stackable grid">
+                    <div class="eleven wide column">
+                        <h3 class="ui header"><a th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="m-black" th:text="${blog.title}"></a></h3>
+                        <p class="m-text" th:text="${blog.description}">文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容</p>
+                        <div class="ui stackable grid">
+                            <div class="eleven wide column">
+                                <div class="ui mini horizontal link list">
+                                    <div class="item">
+                                        <img src="../../static/images/github-icon.png" alt=""
+                                             th:src="${blog.avatar}"  class="ui avatar image">
+                                        <div class="content">
+                                            <div class="header" th:text="${blog.nickname}">SimpleM</div>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <i class="calendar icon"></i>
+                                        <span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd')}">yyyy-MM-dd</span>
+                                    </div>
+                                    <div class="item">
+                                        <i class="eye icon" th:text="${blog.views}"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="five wide column">
+                                <a href="#" target="_blank" class="ui label" th:text="${blog.typeName}">查看详情</a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="five wide column">
+                        <a href="#" target="_blank">
+                            <img src="../../static/images/1005-800x450.jpg" th:src="${blog.firstPicture}" alt="" class="ui rounded image">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--底部分页-->
+        <div class="ui attached segment" th:unless="${blogPageInfo.pages}==1">
+            <span class="ui center aligned menu">
+                <a th:href="@{/(pageNum=${blogPageInfo.pageNum}-1)}" th:unless="${blogPageInfo.isFirstPage}" class="icon item"><i class="left chevron icon"></i></a>
+                <a th:each="p : ${blogPageInfo.navigatepageNums}" th:text="${p}" th:href="@{/(pageNum=${p})}" class="item" th:classappend="${blogPageInfo.pageNum}==${p} ? 'active'">1</a>
+                <a th:href="@{/(pageNum=${blogPageInfo.pageNum}+1)}" th:unless="${blogPageInfo.isLastPage}" class="icon item"><i class="right chevron icon"></i></a>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div id="toolbar" class="m-padding-big m-fixed m-right-bottom">
+    <div class="ui vertical icon buttons">
+        <div id="toTop-button" href="#" class="go top ui button"><i class="chevron up icon"></i></div>
+    </div>
+</div>
+
+<!--底部footer-->
+<footer th:replace="fragments :: footer"></footer>
+
+<th:block th:replace="fragments :: script">
+</th:block>
+</body>
+</html>

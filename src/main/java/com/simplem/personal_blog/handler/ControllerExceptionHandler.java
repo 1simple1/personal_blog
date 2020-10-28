@@ -12,17 +12,19 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * ClassName: ControllerExceptionHandler
- * Package: com.simplem.personal_blog.handler
- * Description：对controller进行全局处理
+ * Package: com.simplem.blog.handler
+ * Description：
  * Author: simpleM
- * Date: 2020/10/22 13:21
+ * Date: 2020/10/8/008
+ * Time: 11:37
  */
 @ControllerAdvice
+//将错误信息返回到页面
 public class ControllerExceptionHandler {
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());//生成日志信息
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @ExceptionHandler(Exception.class)
-    public ModelAndView exceptionHandler(HttpServletRequest request, Exception e) throws Exception {
+    public ModelAndView exceptionHandler(HttpServletRequest request,Exception e) throws Exception {
         logger.error("Request URL : {},Exception e : {}",request.getRequestURL(),e);
 
         if(AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class) != null){

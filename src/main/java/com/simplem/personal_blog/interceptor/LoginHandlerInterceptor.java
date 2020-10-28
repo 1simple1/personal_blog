@@ -1,6 +1,8 @@
 package com.simplem.personal_blog.interceptor;
 
 import com.simplem.personal_blog.model.User;
+import lombok.SneakyThrows;
+import org.junit.Test;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;

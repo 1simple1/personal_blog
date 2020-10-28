@@ -2,8 +2,9 @@ package com.simplem.personal_blog.dao;
 
 
 import com.simplem.personal_blog.model.Blog;
+import com.simplem.personal_blog.vo.BlogQuery;
 import com.simplem.personal_blog.vo.FirstPageBlog;
-import com.simplem.personal_blog.vo.indexBlog;
+import com.simplem.personal_blog.vo.IndexBlog;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -17,12 +18,11 @@ public interface BlogMapper {
 
     List<Blog> searchAllBlog(Blog blog);  //后台根据标题、分类、推荐搜索博客
 
-
     List<FirstPageBlog> findAll();
 
-    List<indexBlog> getNewBlogs();
+    List<IndexBlog> getNewBlogs();
 
-    List<indexBlog> findRecommendBlogs();   //首页展示的博客
+    List<IndexBlog> findRecommendBlogs();   //首页展示的博客
 
     List<FirstPageBlog> findAllByTypeId(Long typeId);//分类页面展示的博客
 
@@ -41,4 +41,6 @@ public interface BlogMapper {
     int update(Blog blog);
 
     int delete(Long id);
+
+    List<Blog> getAllBlogBySearch(BlogQuery blogQuery);
 }

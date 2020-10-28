@@ -8,6 +8,7 @@ import com.simplem.personal_blog.model.User;
 import com.simplem.personal_blog.service.TagService;
 import com.simplem.personal_blog.service.TypeService;
 import com.simplem.personal_blog.service.impl.BlogServiceImpl;
+import com.simplem.personal_blog.vo.BlogQuery;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,25 +49,26 @@ public class BlogController {
     }
     @GetMapping("/blogs")
     public String showBlog(Model model,@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
-        String orderBy = "update_time desc";//排序规则(* desc)按*降序
-        PageHelper.startPage(pageNum,5,orderBy);//分页
+        String orderBy = "update_time desc";//排序规则(* desc)按*降序 也可以直接加在SQL语句中
+        PageHelper.startPage(pageNum,3,orderBy);//分页
         List<Blog> blogList =  blogService.getAllBlog();
         PageInfo<Blog> pageInfo = new PageInfo<>(blogList);//将listType封装到PageInfo中
-        model.addAttribute("pageInfo",pageInfo);
+        model.addAttribute("blogPageInfo",pageInfo);
         model.addAttribute("types", typeService.getAllType());//查询博客的类型和分类
         return LIST;
     }
 
     @PostMapping("/blogs/search") //按条件查询博客
-    public String searchBlogs(Model model, @RequestParam(required = false,defaultValue = "1",value = "pageNum")int pageNum, Blog blog){
-        PageHelper.startPage(pageNum, 5);
-        List<Blog> allBlog = blogService.searchAllBlog(blog);
+    public String searchBlogs(Model model , BlogQuery blogQuery,
+                              @RequestParam(defaultValue = "1",value = "pageNum") int pageNum){
+        PageHelper.startPage(pageNum, 3);
+        List<Blog> allBlog = blogService.getAllBlogBySearch(blogQuery);
         //得到分页结果对象
         PageInfo<Blog> pageInfo = new PageInfo<>(allBlog);
-        model.addAttribute("pageInfo", pageInfo);
+        model.addAttribute("blogPageInfo", pageInfo);
         model.addAttribute("message", "查询成功");
-        setTypeAndTag(model);
-        return "admin/blogs";
+        model.addAttribute("types", typeService.getAllType());
+        return "admin/blogs :: blogList";
     }
 
     @GetMapping("/blogs/input")
@@ -97,7 +99,7 @@ public class BlogController {
         if( blog.getId() == null){     // 表示新增的blog
             int save = blogService.save(blog);
             if (save == 1) {
-                redirectAttributes.addFlashAttribute("success", "保存成功");
+                redirectAttributes.addFlashAttribute("success", "保存成功！");
             } else {
                 redirectAttributes.addFlashAttribute("error", "保存失败");
             }
@@ -105,7 +107,7 @@ public class BlogController {
         }else { //表示博客的修改
             int update = blogService.update(blog);
             if (update == 1) {
-                redirectAttributes.addFlashAttribute("success", "修改成功");
+                redirectAttributes.addFlashAttribute("success", "修改成功！");
             } else {
                 redirectAttributes.addFlashAttribute("error", "修改失败");
             }
@@ -114,12 +116,14 @@ public class BlogController {
     }
 
     @GetMapping("/blogs/{id}/delete")
-    public String delete(@PathVariable Long id,Model model){
+    public String delete(@PathVariable Long id,RedirectAttributes attributes){
         if( blogService.delete(id) > 0){
-            model.addAttribute("success","删除成功");
+            attributes.addFlashAttribute("success","删除成功！");
         }else {
-            model.addAttribute("error","删除失败");
+            attributes.addFlashAttribute("error","删除失败");
+
         }
-        return LIST;
+        return REDIRECT_LIST;//删除完成后需要重定向到博客管理页面
     }
+
 }

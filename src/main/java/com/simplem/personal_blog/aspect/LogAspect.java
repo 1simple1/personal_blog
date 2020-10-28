@@ -1,4 +1,4 @@
-package com.simplem.blog.aspect;
+package com.simplem.personal_blog.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -20,21 +20,27 @@ import java.util.Arrays;
  */
 @Aspect
 @Component
-//定义切面，进行日志信息处理
+//定义切面，收集信息进行日志处理
 public class LogAspect {
 
+/*    execution ( [modifiers-pattern] 访问权限类型
+            ret-type-pattern 返回值类型
+            [declaring-type-pattern] 全限定性类名
+            name-pattern(param-pattern)方法名(参数名)
+           [throws-pattern] 抛出异常类型
+      )[]中的内容可以省略，各部分中间用空格隔开*/
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     //对Controller层定义切面
-    @Pointcut("execution(* com.simplem.personal_blog.controller.*.*(..))")
-    public void log(){ }
+    @Pointcut("execution(* com.simplem.personal_blog.controller..*.*(..))")//用pointcut统一管理切面点
+    private void log(){ }//别名
 
-    @Before("log()")
+    @Before("log()") //前置通知，在目标方法执行前通知
     public void doBefore(JoinPoint joinPoint){
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
-        String url = request.getRequestURL().toString();
-        String ip = request.getRemoteAddr();
+        String url = request.getRequestURL().toString();    //获取请求的url
+        String ip = request.getRemoteAddr();    //获取请求的ip
         //获取调用的类名和方法名
         String classMethod = joinPoint.getSignature().getDeclaringTypeName() + "." +joinPoint.getSignature().getName();
         Object[] args = joinPoint.getArgs();
@@ -50,7 +56,7 @@ public class LogAspect {
     //在控制台输出日志信息
     @AfterReturning(returning = "result",pointcut = "log()")
     public void doAfterReturn(Object result){
-        logger.info("Result : " + result);
+        logger.info("Result 返回结果: " + result);
     }
 
     private class RequestLog{
@@ -69,11 +75,12 @@ public class LogAspect {
         @Override
         public String toString() {
             return "RequestLog{" +
-                    "url='" + url + '\'' +
-                    ", ip='" + ip + '\'' +
-                    ", classMethod='" + classMethod + '\'' +
-                    ", args=" + Arrays.toString(args) +
+                    "url地址：'" + url + '\'' +
+                    ", ip地址：'" + ip + '\'' +
+                    ", classMethod方法名：'" + classMethod + '\'' +
+                    ", args参数：" + Arrays.toString(args) +
                     '}';
         }
+
     }
 }

@@ -1,8 +1,9 @@
 package com.simplem.personal_blog.service;
 
 import com.simplem.personal_blog.model.Blog;
+import com.simplem.personal_blog.vo.BlogQuery;
 import com.simplem.personal_blog.vo.FirstPageBlog;
-import com.simplem.personal_blog.vo.indexBlog;
+import com.simplem.personal_blog.vo.IndexBlog;
 
 import java.util.List;
 
@@ -21,9 +22,9 @@ public interface BlogService {
 
     List<Blog> searchAllBlog(Blog blog);
 
-    List<indexBlog> getNewBlogs();
+    List<IndexBlog> getNewBlogs();
 
-    List<indexBlog> findRecommendBlogs();
+    List<IndexBlog> findRecommendBlogs();
 
     List<FirstPageBlog> findAllByTypeId(Long typeId);//分类页面展示的博客
 
@@ -38,4 +39,6 @@ public interface BlogService {
     int update(Blog blog);
 
     int delete(Long id);
+
+    List<Blog> getAllBlogBySearch(BlogQuery blogQuery);
 }
