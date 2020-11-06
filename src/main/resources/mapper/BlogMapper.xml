@@ -45,6 +45,7 @@
         from t_blog b
         INNER JOIN t_type t
         ON b.type_id = t.id
+        order by b.update_time desc
     </select>
 
     <resultMap id="firstPageBlog" type="com.simplem.personal_blog.vo.FirstPageBlog">
@@ -102,6 +103,7 @@
         <result property="title" column="title"/>
     </resultMap>
 
+    <!--底部最新博客展示-->
     <select id="getNewBlogs" resultMap="indexBlog">
         select b.id, b.title, b.update_time
         from blog.t_blog b
@@ -193,5 +195,27 @@
             </if>
         </where>
         order by update_time desc
+    </select>
+
+    <select id="searchBlog" parameterType="com.simplem.personal_blog.vo.BlogQuery" resultMap="firstPageBlog">
+        select b.id, b.title, b.first_picture, b.views, b.update_time, b.description,
+				t.name,
+				u.nickname, u.avatar
+        from (t_blog b INNER JOIN t_type t ON b.type_id = t.id)
+        INNER JOIN t_user u
+        ON b.user_id = u.id
+        where
+            b.published and (title like concat('%',#{title},'%') or content like concat('%',#{title},'%'))
+         order by b.update_time desc
+    </select>
+
+    <select id="findGroupYear" resultType="String">
+        select DATE_FORMAT(b.create_time, '%Y') from t_blog b where b.published order by b.create_time desc
+    </select>
+
+    <select id="findByYear" resultMap="blog">
+        select b.title, b.create_time, b.id, b.flag
+        from t_blog b
+        where b.published and DATE_FORMAT(b.create_time, "%Y") = #{year}
     </select>
 </mapper>

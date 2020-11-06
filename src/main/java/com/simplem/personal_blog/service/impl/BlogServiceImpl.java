@@ -17,8 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * ClassName: BlogServiceImpl
@@ -156,5 +155,26 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public List<Blog> getAllBlogBySearch(BlogQuery blogQuery) {
         return blogMapper.getAllBlogBySearch(blogQuery);
+    }
+
+    @Override
+    public List<FirstPageBlog> searchBlog(BlogQuery blogQuery) {
+        return blogMapper.searchBlog(blogQuery);
+    }
+
+    @Override
+    public Map<String, List<Blog>> archiveBlog() {
+        List<String> years = blogMapper.findGroupYear();
+        Set<String> set = new TreeSet<>(years);  //set去掉重复的年份，TreeSet存储不重复，自动排序
+        Map<String, List<Blog>> map = new LinkedHashMap<>();
+        for (String year : set) {
+            map.put(year, blogMapper.findByYear(year));
+        }
+        return map;
+    }
+
+    @Override
+    public int countBlog() {
+        return blogMapper.findAll().size();
     }
 }

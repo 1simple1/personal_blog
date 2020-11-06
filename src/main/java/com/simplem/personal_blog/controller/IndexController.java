@@ -2,17 +2,20 @@ package com.simplem.personal_blog.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.simplem.personal_blog.model.Blog;
 import com.simplem.personal_blog.model.Tag;
 import com.simplem.personal_blog.model.Type;
 import com.simplem.personal_blog.service.BlogService;
 import com.simplem.personal_blog.service.TagService;
 import com.simplem.personal_blog.service.TypeService;
+import com.simplem.personal_blog.vo.BlogQuery;
 import com.simplem.personal_blog.vo.FirstPageBlog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -57,5 +60,18 @@ public class IndexController {
                                  Model model){
         model.addAttribute("newBlogs",blogService.getNewBlogs());
         return "fragments :: newBlogList";
+    }
+
+    @PostMapping("/search")
+    public String searchBlog(@RequestParam(defaultValue = "1") int pageNum,
+                             @RequestParam("keyword") String keyword,
+                             Model model){
+        BlogQuery blogQuery = new BlogQuery();
+        blogQuery.setTitle(keyword);
+        List<FirstPageBlog> blogList = blogService.searchBlog(blogQuery);
+        PageHelper.startPage(pageNum, 5);
+        PageInfo<FirstPageBlog> pageInfo = new PageInfo<>(blogList);
+        model.addAttribute("blogPageInfo",pageInfo);
+        return "search";
     }
 }

@@ -6,6 +6,7 @@ import com.simplem.personal_blog.vo.BlogQuery;
 import com.simplem.personal_blog.vo.FirstPageBlog;
 import com.simplem.personal_blog.vo.IndexBlog;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -43,4 +44,11 @@ public interface BlogMapper {
     int delete(Long id);
 
     List<Blog> getAllBlogBySearch(BlogQuery blogQuery);
+
+    List<FirstPageBlog> searchBlog(BlogQuery blogQuery);
+
+    List<String> findGroupYear();  //查询所有年份，返回一个集合
+
+    List<Blog> findByYear(@Param("year") String year);  //按年份查询博客
+
 }

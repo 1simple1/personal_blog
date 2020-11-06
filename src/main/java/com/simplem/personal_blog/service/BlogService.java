@@ -6,6 +6,7 @@ import com.simplem.personal_blog.vo.FirstPageBlog;
 import com.simplem.personal_blog.vo.IndexBlog;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * ClassName: BlogService
@@ -41,4 +42,10 @@ public interface BlogService {
     int delete(Long id);
 
     List<Blog> getAllBlogBySearch(BlogQuery blogQuery);
+
+    List<FirstPageBlog> searchBlog(BlogQuery blogQuery);
+
+    Map<String,List<Blog>> archiveBlog();  //归档博客
+
+    int countBlog();  //查询博客条数
 }
