@@ -45,7 +45,7 @@
             <div class="four wide column">
                 <h4 class="ui inverted header">介绍</h4>
                 <div class="ui inverted link list"></div>
-                <p href="#" class="item m-opacity-tiny m-white">这是我的个人博客、会分享关于编程、写作、思考相关的内容，希望可以给来到这儿的人有所帮助...</p>
+                <p href="#" class="item m-opacity-tiny m-white">这是我的个人博客、会分享关于编程、写作、思考相关的内容，希望可以给来到这的人有所帮助...</p>
             </div>
             <div class="four wide column">
                 <h4 class="ui inverted header">最新博客</h4>
@@ -66,8 +66,7 @@
             <div class="four wide column">
                 <h4 class="ui inverted header">联系我</h4>
                 <div class="ui inverted link list"></div>
-                <a href="#" class="item m-opacity-tiny m-white"
-                   th:text="#{fragments.email}">邮箱：123456789@qq.com</a><br/>
+                <a href="#" class="item m-opacity-tiny m-white" th:text="#{fragments.email}">邮箱：123456789@qq.com</a><br/>
                 <a href="#" class="item m-opacity-tiny m-white" th:text="#{fragments.qq}">QQ：123456798</a><br/>
                 <a href="#" class="item m-opacity-tiny m-white" th:text="#{fragments.wechat}">微信：12345678910</a><br/>
             </div>
@@ -84,7 +83,7 @@
 <!--        <p class="m-text-thin m-text-spaced m-opacity-mini">Copyright @ 2020-2021 Designed by smpleMHY</p>-->
 <!--        <p class="m-text-thin m-text-spaced m-opacity-mini"><a href="#">备案号 xxxxxxxxxxxxxx</a></p>-->
         <div class="ui inverted section divider"></div>
-        <div style="color: #F08047;margin-top: -18px" class="ui inverted m-text-thin m-text-spaced">Copyright @ 2020-2021 Designed by smpleMHY</div>
+        <div style="color: #F08047;margin-top: -18px" class="ui inverted m-text-thin m-text-spaced">Copyright @ 2020 Designed by simpleMHY</div>
         <a rel="nofollow" href="#" target="_blank">备案号 xxxxxxxxxxxxxx</a>
     </div>
 </footer>
@@ -148,7 +147,7 @@
 
         function setTime() {
             /*此处为网站的创建时间*/
-            var create_time = Math.round(new Date(Date.UTC(2020, 06, 25, 15, 15, 15)).getTime() / 1000);
+            var create_time = Math.round(new Date(Date.UTC(2020, 09, 25, 15, 15, 15)).getTime() / 1000);
             var timestamp = Math.round((new Date().getTime() + 8 * 60 * 60 * 1000) / 1000);
             currentTime = secondToDate((timestamp - create_time));
             currentTimeHtml = currentTime[0] + '年' + currentTime[1] + '天'

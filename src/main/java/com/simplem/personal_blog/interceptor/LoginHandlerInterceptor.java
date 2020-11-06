@@ -24,7 +24,7 @@ public class LoginHandlerInterceptor extends HandlerInterceptorAdapter {
         User user = (User) request.getSession().getAttribute("user");
         if(user == null){
             //没有登录，禁止访问，返回登录页面登录
-            request.setAttribute("message","要进入后台，请先登录！");
+            request.setAttribute("message","权限不足，请先登录！");
             request.getRequestDispatcher("/admin").forward(request,response);
             return false;//不放行
         }

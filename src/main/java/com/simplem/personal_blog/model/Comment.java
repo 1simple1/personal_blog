@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -25,7 +27,7 @@ public class Comment {
     private String parentNickname;
 
     //回复评论
-    //private List<Comment> replyComments = new ArrayList<>();
+    private List<Comment> replyComments = new ArrayList<>();
 
     //父评论
     private Comment parentComment;
