@@ -165,7 +165,7 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Map<String, List<Blog>> archiveBlog() {
         List<String> years = blogMapper.findGroupYear();
-        Set<String> set = new TreeSet<>(years);  //set去掉重复的年份，TreeSet存储不重复，自动排序
+        Set<String> set = new TreeSet<>(years);  //TreeSet存储元素不重复，自动排序
         Map<String, List<Blog>> map = new LinkedHashMap<>();
         for (String year : set) {
             map.put(year, blogMapper.findByYear(year));

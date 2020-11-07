@@ -28,5 +28,5 @@ public interface TagService {
 
     List<Tag> listTag(String ids);
 
-    List<Tag> findTagByBlogId(Long blogId);
+    List<Tag> findTagByBlogId(List<Long> ids);
 }

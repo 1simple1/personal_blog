@@ -64,8 +64,8 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<Tag> findTagByBlogId(Long blogId) {
-        return tagMapper.findTagByBlogId(blogId);
+    public List<Tag> findTagByBlogId(List<Long> ids) {
+        return tagMapper.findAllByIds(ids);
     }
 
     //ids: 1,2,3

@@ -35,7 +35,7 @@
         <div class="ui attached padded segment">
             <!--内容-->
             <div class="ui right aligned basic segment">
-                <div class="ui orange basic label" th:text="${blog.flag}">原创</div>
+                <div class="ui basic label" th:classappend="${blog.flag == '原创'} ? 'teal' : 'orange'" th:text="${blog.flag}">原创</div>
             </div>
             <h1 class="ui center aligned header" th:text="${blog.title}">标题一</h1>
             <br/>
@@ -43,9 +43,19 @@
             <div id="content" class="typo typo-selection js-toc-content m-padded-text" th:utext="${blog.content}">
 
             </div>
+            <!--分类-->
+            <div class="ui basic segment">
+                <span class="m-text"> <i class="idea icon"></i>分类：</span>
+                <a target="_blank" th:href="@{/types/{id}(id=${blog.type.id})}">
+                    <div class="ui basic teal left pointing label" th:text="${blog.type.name}">java基础</div>
+                </a>
+            </div>
             <!--标签-->
-            <div class="m-padded-left">
-                <div class="ui basic teal left pointing label" th:text="${blog.type.name}">java基础</div>
+            <div class="ui basic segment">
+                <span class="m-text"> <i class="tag icon"></i>标签：</span>
+                <a href="#" th:href="@{/tags/{id}(id=${tag.id})}" th:each="tag : ${tags}" target="_blank" class="ui basic blue padded-mini2 label m-tags">
+                    <span class="text-white" th:text="${tag.name}">Python</span>
+                </a>
             </div>
 
             <!--打赏-->
@@ -75,9 +85,9 @@
             <div class="ui middle aligned grid">
                 <div class="eleven wide column">
                     <ui class="list">
-                        <li>作者：<span th:text="${blog.user.nickname}">simpleM</span><a th:href="@{/about}" target="_blank">(联系作者)</a></li>
-                        <li>发表时间：<span th:text="${#dates.format(blog.createTime,'yyyy-MM-dd HH:mm')}">2020-10-01</span></li>
-                        <li>版本声明：自由转载-非商用</li>
+                        <li>作者：<span th:text="${blog.user.nickname}">simpleM</span></li>
+                        <li>发表时间：<span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd HH:mm')}">2020-10-01</span></li>
+                        <li>转载声明：自由转载-非商用</li>
                     </ui>
                 </div>
                 <div class="five wide column">
@@ -206,11 +216,8 @@
 <!--底部footer-->
 <footer th:replace="fragments :: footer"></footer>
 
-<script src="/lib/sweetalert/dist/sweetalert.js"></script>
 <th:block th:replace="fragments :: script">
 </th:block>
-
-<!--<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>-->
 
 <script th:inline="javascript">
 
@@ -298,6 +305,7 @@
 
     // 提交评论数据
     function postData() {
+        $body = (window.opera) ? (document.compatMode === "CSS1Compat" ? $('html') : $('body')) : $('html,body');// 这行是 Opera 的补丁, 少了它 Opera 是直接用跳的而且画面闪烁 by willin
 
         $("#comment-container").load(/*[[@{/comments}]]*/"/comments", {
             "parentComment.id": $("[name='parentComment.id']").val(),

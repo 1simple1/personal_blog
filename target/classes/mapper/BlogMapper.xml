@@ -40,7 +40,7 @@
     
     <!--博客后台展示-->
     <select id="getAllBlog" resultMap="blog">
-        select b.id, b.title, b.update_time, b.recommend, b.type_id, b.published,
+        select b.id, b.title, b.update_time, b.recommend, b.type_id, b.published,b.commentabled,b.share_statement,
                t.id typeid, t.name typename
         from t_blog b
         INNER JOIN t_type t
