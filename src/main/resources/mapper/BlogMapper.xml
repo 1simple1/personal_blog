@@ -210,12 +210,13 @@
     </select>
 
     <select id="findGroupYear" resultType="String">
-        select DATE_FORMAT(b.create_time, '%Y') from t_blog b where b.published order by b.create_time desc
+        select DATE_FORMAT(b.create_time, '%Y') from t_blog b where b.published order by b.create_time
     </select>
 
     <select id="findByYear" resultMap="blog">
         select b.title, b.create_time, b.id, b.flag
         from t_blog b
         where b.published and DATE_FORMAT(b.create_time, "%Y") = #{year}
+        order by b.create_time
     </select>
 </mapper>

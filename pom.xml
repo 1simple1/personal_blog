@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.simplem</groupId>
     <artifactId>personal_blog</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <name>personal_blog</name>
     <description>Demo project for Spring Boot</description>
 

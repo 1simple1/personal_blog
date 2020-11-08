@@ -3,13 +3,11 @@ package com.simplem.personal_blog.controller.admin;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simplem.personal_blog.model.Blog;
-import com.simplem.personal_blog.model.Type;
 import com.simplem.personal_blog.model.User;
 import com.simplem.personal_blog.service.TagService;
 import com.simplem.personal_blog.service.TypeService;
 import com.simplem.personal_blog.service.impl.BlogServiceImpl;
 import com.simplem.personal_blog.vo.BlogQuery;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,7 +48,7 @@ public class BlogController {
     @GetMapping("/blogs")
     public String showBlog(Model model,@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
         String orderBy = "update_time desc";//排序规则(* desc)按*降序 也可以直接加在SQL语句中
-        PageHelper.startPage(pageNum,3,orderBy);//分页
+        PageHelper.startPage(pageNum,5,orderBy);//分页
         List<Blog> blogList =  blogService.getAllBlog();
         PageInfo<Blog> pageInfo = new PageInfo<>(blogList);//将listType封装到PageInfo中
         model.addAttribute("blogPageInfo",pageInfo);
@@ -61,7 +59,7 @@ public class BlogController {
     @PostMapping("/blogs/search") //按条件查询博客
     public String searchBlogs(Model model , BlogQuery blogQuery,
                               @RequestParam(defaultValue = "1",value = "pageNum") int pageNum){
-        PageHelper.startPage(pageNum, 3);
+        PageHelper.startPage(pageNum, 5);
         List<Blog> allBlog = blogService.getAllBlogBySearch(blogQuery);
         //得到分页结果对象
         PageInfo<Blog> pageInfo = new PageInfo<>(allBlog);
